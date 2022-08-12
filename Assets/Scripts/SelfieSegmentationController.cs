@@ -15,6 +15,12 @@ public class SelfieSegmentationController : MonoBehaviour
         segment = new SelfieSegmentation(ssResource);
     }
 
+    public Texture GetHuman(Texture webcamTexture)
+    {
+        segment.ProcessImage(webcamTexture);
+        return segment.texture;
+    }
+
 
     private void OnApplicationQuit()
     {

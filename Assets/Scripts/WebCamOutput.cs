@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class WebCamOutput : MonoBehaviour
 {
-    [SerializeField] private PlaybackScreen screen; 
+    [SerializeField] private SelfieSegmentationController controller;
+    [SerializeField] private PlaybackScreen camScreen;
+    [SerializeField] private PlaybackScreen humanScreen;
+
+    WebCamTexture webcam;
 
     void Start()
     {
         WebCamDevice[] devices = WebCamTexture.devices;
         foreach(WebCamDevice device in devices)
             Debug.Log(device.name);
-        WebCamTexture webcam = new WebCamTexture(devices[0].name);
+
+        webcam = new WebCamTexture(devices[0].name);
         webcam.Play();
-        screen.SetScreenTexture(webcam);
+        camScreen.SetScreenTexture(webcam);
     }
 
     void Update()
     {
-        
+        if(webcam.didUpdateThisFrame)
+        {
+            humanScreen.SetScreenTexture(controller.GetHuman(webcam));
+        }
     }
 }
