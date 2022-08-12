@@ -320,7 +320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ab7d38bbaa2974989861511fbde256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screen: {fileID: 509709705}
+  controller: {fileID: 857956043}
+  camScreen: {fileID: 509709705}
+  humanScreen: {fileID: 1816023557}
 --- !u!4 &262243621
 Transform:
   m_ObjectHideFlags: 0
@@ -579,6 +581,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1816023557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7290490833800518036, guid: 51c18da664e72024697c41c890bb885a, type: 3}
+  m_PrefabInstance: {fileID: 147599990}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a61b5776e56ada4d89c2fd1b3fdc84d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7290490834230334493
 PrefabInstance:
   m_ObjectHideFlags: 0
