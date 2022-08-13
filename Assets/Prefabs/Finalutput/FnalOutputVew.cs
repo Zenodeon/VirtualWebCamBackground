@@ -12,6 +12,7 @@ public class FnalOutputVew : MonoBehaviour
 {
     [SerializeField] private RawImage rawImage;
     [SerializeField] private RectTransform maskRect;
+    [SerializeField] private UIControllers controller;
     [Space]
     [SerializeField] private float yPos;
     [SerializeField] private float width;
@@ -56,6 +57,7 @@ public class FnalOutputVew : MonoBehaviour
 
     public void Retake()
     {
-
+        maskRect.DOAnchorPosY(0, duration);
+        maskRect.DOSizeDelta(new Vector2(1280, 720), duration).OnComplete(() => controller.Retake());
     }
 }

@@ -49,4 +49,18 @@ public class UIControllers : MonoBehaviour
 
         fov.Capture();
     }
+
+    public void Retake()
+    {
+        fovGroup.DOFade(0, duration);
+
+        fovGroup.interactable = false;
+        fovGroup.blocksRaycasts = false;
+
+        IMGProcesser._instance.processImage = true;
+
+        canvasGroup.DOFade(1, duration);
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+    }
 }

@@ -27,8 +27,6 @@ public class BackgroundCrtl : MonoBehaviour
         else if(currentBGIndex < 0)
             currentBGIndex = bgSprites.Count - 1;
 
-        Debug.Log(currentBGIndex);
-
         background.sprite = bgSprites[currentBGIndex];
     }
 
