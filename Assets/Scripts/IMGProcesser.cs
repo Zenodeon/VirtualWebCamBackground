@@ -6,7 +6,8 @@ public class IMGProcesser : MonoBehaviour
 {
     [SerializeField] private SelfieSegmentationController SSCtrler;
     [Space]
-    [Range(0, 1)] public float thresholdLevel = 0.314f;
+    [Range(0, 1)] public float thresholdBlackLevel = 0.314f;
+    [Range(0, 1)] public float thresholdWhiteLevel = 0.686f;
     [Space]
     public Texture camFeed;
     public Texture2D personMask;
@@ -58,8 +59,10 @@ public class IMGProcesser : MonoBehaviour
         for (int pi = 0; pi < dataLength; pi++)
         {
             float alpha = maskData[pi].a;
-            if (alpha <= thresholdLevel)
+            if (alpha < thresholdBlackLevel)
                 maskData[pi].a = 0;
+            else if (alpha > thresholdWhiteLevel)
+                maskData[pi].a = 1;
         }
 
         thresholdedMask.SetPixels(maskData);
