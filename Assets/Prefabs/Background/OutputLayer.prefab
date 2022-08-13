@@ -129,6 +129,13 @@ MonoBehaviour:
   background: {fileID: 3290795802401217103}
   foreground: {fileID: 7012726422609749430}
   screen: {fileID: 8901031655203907449}
+  bgSprites:
+  - {fileID: 21300000, guid: 877a4cc797888464ca90f09f4c34d4da, type: 3}
+  - {fileID: 21300000, guid: 708debcc8b8917a48ae868ffa2d356aa, type: 3}
+  - {fileID: 21300000, guid: 8f62a645613267248a3ee442f083a8a8, type: 3}
+  - {fileID: 21300000, guid: e87be0f4cd0d8ca4f9cb9f38100572fe, type: 3}
+  - {fileID: 21300000, guid: 214e780e7865a3e47966713200ecf257, type: 3}
+  - {fileID: 21300000, guid: 67b61cf1b403448469c45e95c31a1d3c, type: 3}
 --- !u!1 &9110633467130085984
 GameObject:
   m_ObjectHideFlags: 0
