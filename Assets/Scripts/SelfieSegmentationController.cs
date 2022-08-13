@@ -21,7 +21,6 @@ public class SelfieSegmentationController : MonoBehaviour
         return segment.texture;
     }
 
-
     private void OnApplicationQuit()
     {
         segment.Dispose();
