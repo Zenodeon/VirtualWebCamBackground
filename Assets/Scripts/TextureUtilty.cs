@@ -19,4 +19,19 @@ public static class TextureUtilty
         texture2D.Apply();
         return texture2D;
     }
+
+    public static void LayerTexture(Texture2D basetexture, Texture2D topTexture)
+    {
+        Color[] baseData = basetexture.GetPixels();
+        Color[] topData = topTexture.GetPixels();
+
+        int dataLength = topData.Length;
+        for (int pi = 0; pi < dataLength; pi++)
+        {
+            baseData[pi] += topData[pi] / topData[pi].a;
+        }
+
+        basetexture.SetPixels(baseData);
+        basetexture.Apply();
+    }
 }
