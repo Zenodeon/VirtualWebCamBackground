@@ -5,16 +5,10 @@ using UnityEngine.UI;
 
 public class PlaybackScreen : MonoBehaviour
 {
-    [SerializeField] private Image image;
-    [SerializeField] private Material screenMatPrefab;
-
-    private void Start()
-    {
-        image.material = new Material(screenMatPrefab);
-    }
+    [SerializeField] private RawImage image;
 
     public void SetScreenTexture(Texture texture)
     {
-        image.material.mainTexture = texture;
+        image.texture = texture;
     }
 }

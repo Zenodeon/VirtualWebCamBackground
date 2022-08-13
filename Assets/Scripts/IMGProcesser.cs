@@ -40,7 +40,7 @@ public class IMGProcesser : MonoBehaviour
     private void ProcessImage()
     {
         GetPersonMask();
-        MaskedOutCamFeed();
+        MaskedOutCamFeed(personMask);
     }
 
     private void GetPersonMask()
@@ -53,9 +53,9 @@ public class IMGProcesser : MonoBehaviour
 
     }
 
-    private void MaskedOutCamFeed()
+    private void MaskedOutCamFeed(Texture mask)
     {
-
+        maskedCamFeed = new Texture2D(camFeed.width, camFeed.height, TextureFormat.ARGB32, false);
     }
 
     private void UpdateScreenTexture()
