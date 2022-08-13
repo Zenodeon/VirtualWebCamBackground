@@ -19,11 +19,23 @@ public class UIControllers : MonoBehaviour
 
     public void Capture()
     {
+        HideControls();
+
+        CountDown();
+    }
+
+    public void HideControls()
+    {
         canvasGroup.DOFade(0, duration);
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
+    }
 
-        CountDown();
+    public void ShowControls()
+    {
+        canvasGroup.DOFade(1, duration);
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
     }
 
     private void CountDown()
@@ -59,8 +71,6 @@ public class UIControllers : MonoBehaviour
 
         IMGProcesser._instance.processImage = true;
 
-        canvasGroup.DOFade(1, duration);
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
+        ShowControls();
     }
 }
