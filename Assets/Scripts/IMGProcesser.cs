@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class IMGProcesser : MonoBehaviour
 {
+    public static IMGProcesser _instance;
+
     [SerializeField] private SelfieSegmentationController SSCtrler;
     [Space]
     [SerializeField] [Range(0, 1)] private float thresholdBlackLevel = 0.314f;
@@ -15,7 +17,14 @@ public class IMGProcesser : MonoBehaviour
     public Texture2D thresholdedMask;
     public Texture2D maskedCamFeed;
     [Space]
+    public bool processImage = true;
+    [Space]
     public UnityEvent<IMGProcesser> OnProcessed = new UnityEvent<IMGProcesser>();
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     public void OnCamChange(Texture newFeed)
     {
@@ -32,7 +41,8 @@ public class IMGProcesser : MonoBehaviour
         if (!camFeed)
             return;
 
-        ProcessImage();
+        if (processImage)
+            ProcessImage();
     }
 
     private void ProcessImage()
