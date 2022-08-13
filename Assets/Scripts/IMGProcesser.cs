@@ -6,27 +6,27 @@ public class IMGProcesser : MonoBehaviour
 {
     [SerializeField] private SelfieSegmentationController SSCtrler;
     [Space]
+    [Range(0, 1)] public float thresholdLevel = 0.314f;
+    [Space]
     public Texture camFeed;
-    public Texture personMask;
-    public Texture thresholdedMask;
-    public Texture maskedCamFeed;
+    public Texture2D personMask;
+    public Texture2D thresholdedMask;
+    public Texture2D maskedCamFeed;
     [Space]
     [SerializeField] PlaybackScreen s1;
     [SerializeField] PlaybackScreen s2;
     [SerializeField] PlaybackScreen s3;
     [SerializeField] PlaybackScreen s4;
 
-    private void Start()
-    {
-        UpdateScreenTexture();
-    }
-
     public void OnCamChange(Texture newFeed)
     {
         camFeed = newFeed;
+        s1.SetScreenTexture(camFeed);
+
+        thresholdedMask = new Texture2D(camFeed.width, camFeed.height, TextureFormat.RGBA32, false);
+        maskedCamFeed = new Texture2D(camFeed.width, camFeed.height, TextureFormat.RGBA32, false);
 
         ProcessImage();
-        UpdateScreenTexture();
     }
 
     public void OnCamUpdate()
@@ -40,29 +40,48 @@ public class IMGProcesser : MonoBehaviour
     private void ProcessImage()
     {
         GetPersonMask();
-        MaskedOutCamFeed(personMask);
+        CleanMask(personMask);
+        MaskedOutCamFeed(thresholdedMask);
     }
 
     private void GetPersonMask()
     {
         personMask = SSCtrler.GetHuman(camFeed);
-    }
-
-    private void CleanMask()
-    {
-
-    }
-
-    private void MaskedOutCamFeed(Texture mask)
-    {
-        maskedCamFeed = new Texture2D(camFeed.width, camFeed.height, TextureFormat.ARGB32, false);
-    }
-
-    private void UpdateScreenTexture()
-    {
-        s1.SetScreenTexture(camFeed);
         s2.SetScreenTexture(personMask);
+    }
+
+    private void CleanMask(Texture2D mask)
+    {
+        Color[] maskData = mask.GetPixels();
+
+        int dataLength = maskData.Length;
+        for (int pi = 0; pi < dataLength; pi++)
+        {
+            float alpha = maskData[pi].a;
+            if (alpha <= thresholdLevel)
+                maskData[pi].a = 0;
+        }
+
+        thresholdedMask.SetPixels(maskData);
+        thresholdedMask.Apply();
+
         s3.SetScreenTexture(thresholdedMask);
+    }
+
+    private void MaskedOutCamFeed(Texture2D mask)
+    {
+        Texture2D camf = camFeed.ToTexture2D();
+
+        Color[] maskingData = camf.GetPixels();
+        Color[] maskData = mask.GetPixels();
+
+        int dataLength = maskingData.Length;
+        for (int pi = 0; pi < dataLength; pi++)
+            maskingData[pi].a = maskData[pi].a;
+        
+        maskedCamFeed.SetPixels(maskingData);
+        maskedCamFeed.Apply();
+
         s4.SetScreenTexture(maskedCamFeed);
     }
 

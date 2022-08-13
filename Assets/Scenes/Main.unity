@@ -659,10 +659,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SSCtrler: {fileID: 857956043}
-  camFeed: {fileID: 2800000, guid: c185077643beae046a130bb7d3a66729, type: 3}
-  personMask: {fileID: 2800000, guid: c185077643beae046a130bb7d3a66729, type: 3}
-  thresholdedMask: {fileID: 2800000, guid: c185077643beae046a130bb7d3a66729, type: 3}
-  maskedCamFeed: {fileID: 2800000, guid: c185077643beae046a130bb7d3a66729, type: 3}
+  thresholdLevel: 0.314
+  camFeed: {fileID: 0}
+  personMask: {fileID: 0}
+  thresholdedMask: {fileID: 0}
+  maskedCamFeed: {fileID: 0}
   s1: {fileID: 509709705}
   s2: {fileID: 1816023557}
   s3: {fileID: 219922841}
