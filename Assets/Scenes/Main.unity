@@ -749,5 +749,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIControls
       objectReference: {fileID: 0}
+    - target: {fileID: 6805954081377893574, guid: f456a149c211dfc41bd87ffee070fc06, type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f456a149c211dfc41bd87ffee070fc06, type: 3}
