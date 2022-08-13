@@ -1,7 +1,10 @@
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//using Ookii.Dialogs.Wpf;
 
 using DG.Tweening;
 
@@ -39,8 +42,16 @@ public class FnalOutputVew : MonoBehaviour
 
     public void SaveCapture()
     {
+        string folder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "/Aswin_Background_Removal";
+        if (!Directory.Exists(folder))
+            Directory.CreateDirectory(folder);
+
+        string fileName = "ABR_" + DateTime.Now.ToString("hhmmssff") + ".png";
+
+        string filePath = folder + "/" + fileName;
         byte[] ssData = screenCapture.EncodeToPNG();
-        
+
+        File.WriteAllBytes(filePath, ssData);
     }
 
     public void Retake()
