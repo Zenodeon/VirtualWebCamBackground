@@ -1,28 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class IMGProcesser : MonoBehaviour
 {
     [SerializeField] private SelfieSegmentationController SSCtrler;
     [Space]
-    [Range(0, 1)] public float thresholdBlackLevel = 0.314f;
-    [Range(0, 1)] public float thresholdWhiteLevel = 0.686f;
+    [SerializeField] [Range(0, 1)] private float thresholdBlackLevel = 0.314f;
+    [SerializeField] [Range(0, 1)] private float thresholdWhiteLevel = 0.686f;
     [Space]
     public Texture camFeed;
     public Texture2D personMask;
     public Texture2D thresholdedMask;
     public Texture2D maskedCamFeed;
     [Space]
-    [SerializeField] PlaybackScreen s1;
-    [SerializeField] PlaybackScreen s2;
-    [SerializeField] PlaybackScreen s3;
-    [SerializeField] PlaybackScreen s4;
+    public UnityEvent<IMGProcesser> OnProcessed = new UnityEvent<IMGProcesser>();
 
     public void OnCamChange(Texture newFeed)
     {
         camFeed = newFeed;
-        s1.SetScreenTexture(camFeed);
 
         thresholdedMask = new Texture2D(camFeed.width, camFeed.height, TextureFormat.RGBA32, false);
         maskedCamFeed = new Texture2D(camFeed.width, camFeed.height, TextureFormat.RGBA32, false);
@@ -43,12 +40,13 @@ public class IMGProcesser : MonoBehaviour
         GetPersonMask();
         CleanMask(personMask);
         MaskedOutCamFeed(thresholdedMask);
+
+        OnProcessed.Invoke(this);
     }
 
     private void GetPersonMask()
     {
         personMask = SSCtrler.GetHuman(camFeed);
-        s2.SetScreenTexture(personMask);
     }
 
     private void CleanMask(Texture2D mask)
@@ -67,8 +65,6 @@ public class IMGProcesser : MonoBehaviour
 
         thresholdedMask.SetPixels(maskData);
         thresholdedMask.Apply();
-
-        s3.SetScreenTexture(thresholdedMask);
     }
 
     private void MaskedOutCamFeed(Texture2D mask)
@@ -84,8 +80,6 @@ public class IMGProcesser : MonoBehaviour
         
         maskedCamFeed.SetPixels(maskingData);
         maskedCamFeed.Apply();
-
-        s4.SetScreenTexture(maskedCamFeed);
     }
 
     private void PrintSize(Texture texture)
