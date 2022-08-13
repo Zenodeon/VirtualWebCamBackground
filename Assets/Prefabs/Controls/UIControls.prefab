@@ -201,6 +201,8 @@ MonoBehaviour:
   canvasGroup: {fileID: 7817471965020456480}
   counter: {fileID: 8554216452286926295}
   counterGroup: {fileID: 5329066760377629149}
+  fovGroup: {fileID: 0}
+  fov: {fileID: 0}
   duration: 0.3
 --- !u!1 &8534664067673568324
 GameObject:
@@ -431,6 +433,10 @@ PrefabInstance:
     - target: {fileID: 8965194691715243600, guid: 2afd76061dfa79d478b2c09851e70e83, type: 3}
       propertyPath: m_Name
       value: Phase2Toggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965194691715243600, guid: 2afd76061dfa79d478b2c09851e70e83, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2afd76061dfa79d478b2c09851e70e83, type: 3}
