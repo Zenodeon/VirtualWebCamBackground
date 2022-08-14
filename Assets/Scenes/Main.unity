@@ -1536,6 +1536,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 354886610}
     - target: {fileID: 2452747860367183083, guid: f456a149c211dfc41bd87ffee070fc06, type: 3}
+      propertyPath: bgCtrl
+      value: 
+      objectReference: {fileID: 1992476972}
+    - target: {fileID: 2452747860367183083, guid: f456a149c211dfc41bd87ffee070fc06, type: 3}
       propertyPath: fovGroup
       value: 
       objectReference: {fileID: 354886609}
