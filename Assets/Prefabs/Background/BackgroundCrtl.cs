@@ -28,7 +28,7 @@ public class BackgroundCrtl : MonoBehaviour
     {
         screen.SetScreenTexture(imgP.maskedCamFeed);
 
-        if(fourViewBool)
+        if (fourViewBool)
         {
             screen1.SetScreenTexture(imgP.camFeed);
             screen2.SetScreenTexture(imgP.personMask);
