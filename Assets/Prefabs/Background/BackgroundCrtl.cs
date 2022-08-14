@@ -9,7 +9,7 @@ public class BackgroundCrtl : MonoBehaviour
 {
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private RectTransform bgRectTransform;
-    [SerializeField] private RectTransform centerPointRect;
+    [SerializeField] public RectTransform centerPointRect;
     [SerializeField] private UIControllers controler;
     [Space]
     [SerializeField] private Image background;

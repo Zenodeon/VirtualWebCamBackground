@@ -14,6 +14,7 @@ public class UIControllers : MonoBehaviour
     [SerializeField] private CanvasGroup counterGroup;
     [SerializeField] private CanvasGroup fovGroup;
     [SerializeField] private CanvasGroup ip2pGroup;
+    [SerializeField] private CanvasGroup fullScreenCtrlGroup;
     [Space]
     [SerializeField] private BackgroundCrtl bgCtrl;
     [SerializeField] private FnalOutputVew fov;
@@ -32,6 +33,8 @@ public class UIControllers : MonoBehaviour
 
     public void HideControls()
     {
+        bgCtrl.centerPointRect.DOAnchorPosY(-40, 0.3f);
+
         canvasGroup.DOFade(0, duration);
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
@@ -39,6 +42,8 @@ public class UIControllers : MonoBehaviour
 
     public void ShowControls()
     {
+        bgCtrl.centerPointRect.DOAnchorPosY(10, 0.3f);
+
         canvasGroup.DOFade(1, duration);
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
@@ -47,6 +52,8 @@ public class UIControllers : MonoBehaviour
     private void CountDown()
     {
         counterGroup.DOFade(1, 0.3f);
+
+        fullScreenCtrlGroup.Fade(false);
 
         float count = 3.5f;
         DOTween.To(() => count, x => count = x, 1, 2.5f).SetEase(Ease.Linear)
@@ -70,6 +77,8 @@ public class UIControllers : MonoBehaviour
 
     public void Retake()
     {
+        fullScreenCtrlGroup.Fade(true);
+
         fovGroup.DOFade(0, duration);
 
         fovGroup.interactable = false;
@@ -82,12 +91,6 @@ public class UIControllers : MonoBehaviour
 
     public void Phase2Mode(bool state)
     {
-        if (state)
-            ip2pGroup.DOFade(1, 0.3f);
-        else
-            ip2pGroup.DOFade(0, 0.3f);
-
-        ip2pGroup.interactable = state;
-        ip2pGroup.blocksRaycasts = state;
+        ip2pGroup.Fade(state);
     }
 }
