@@ -17,9 +17,13 @@ public class IMGProcesser : MonoBehaviour
     public Texture2D thresholdedMask;
     public Texture2D maskedCamFeed;
     [Space]
+    public float centerPoint;
+    [Space]
     public bool processImage = true;
     [Space]
     public UnityEvent<IMGProcesser> OnProcessed = new UnityEvent<IMGProcesser>();
+
+    Coroutine centerPointCoroutine;
 
     private void Awake()
     {
@@ -50,6 +54,9 @@ public class IMGProcesser : MonoBehaviour
         GetPersonMask();
         CleanMask(personMask);
         MaskedOutCamFeed(thresholdedMask);
+
+        if (centerPointCoroutine == null)
+            centerPointCoroutine = StartCoroutine(SetCenterPointOfMask(thresholdedMask));
 
         OnProcessed.Invoke(this);
     }
@@ -90,6 +97,52 @@ public class IMGProcesser : MonoBehaviour
         
         maskedCamFeed.SetPixels(maskingData);
         maskedCamFeed.Apply();
+    }
+
+    IEnumerator SetCenterPointOfMask(Texture2D mask)
+    {
+        yield return null;
+
+        int sampleSize = 4;
+        float threshold = 0.5f;
+
+        int yStartPos = 300;
+
+        float sum = 0;
+        int count = 0;
+        for (int y = 0; y < mask.height - yStartPos; y += sampleSize)
+        {
+            int xLeft = 0;
+            int xRight = 0;
+            for (int x = 0; x < mask.width; x += sampleSize)
+            {
+                Color color = mask.GetPixel(x, y);
+                if (color.a > threshold)
+                {
+                    xLeft = x;
+                    break;
+                }
+            }
+
+            for (int x = mask.width; x > 0; x -= sampleSize)
+            {
+                Color color = mask.GetPixel(x, y);
+                if (color.a > threshold)
+                {
+                    xRight = x;
+                    break;
+                }
+            }
+
+            int distance = xRight - xLeft;
+            float midPoint = xLeft + (distance / 2);
+            sum += midPoint;
+            count++;
+        }
+        float avgMidPoint = sum / count;
+        centerPoint = avgMidPoint;
+
+        centerPointCoroutine = null;
     }
 
     private void PrintSize(Texture texture)

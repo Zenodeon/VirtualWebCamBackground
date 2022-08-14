@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 using DG.Tweening;
@@ -12,8 +13,13 @@ public class UIControllers : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counter;
     [SerializeField] private CanvasGroup counterGroup;
     [SerializeField] private CanvasGroup fovGroup;
+    [SerializeField] private CanvasGroup ip2pGroup;
     [Space]
+    [SerializeField] private BackgroundCrtl bgCtrl;
     [SerializeField] private FnalOutputVew fov;
+    [Space]
+    [SerializeField] public Toggle phase2;
+    [SerializeField] public Toggle ivPhase2;
     [Space]
     [SerializeField] private float duration = 0.3f;
 
@@ -72,5 +78,16 @@ public class UIControllers : MonoBehaviour
         IMGProcesser._instance.processImage = true;
 
         ShowControls();
+    }
+
+    public void Phase2Mode(bool state)
+    {
+        if (state)
+            ip2pGroup.DOFade(1, 0.3f);
+        else
+            ip2pGroup.DOFade(0, 0.3f);
+
+        ip2pGroup.interactable = state;
+        ip2pGroup.blocksRaycasts = state;
     }
 }

@@ -8,9 +8,13 @@ using DG.Tweening;
 public class BackgroundCrtl : MonoBehaviour
 {
     [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private RectTransform bgRectTransform;
+    [SerializeField] private RectTransform centerPointRect;
     [SerializeField] private UIControllers controler;
     [Space]
     [SerializeField] private Image background;
+    [SerializeField] private Image backgroundLeft;
+    [SerializeField] private Image backgroundRight;
     [SerializeField] private Image foreground;
     [Space]
     [SerializeField] private PlaybackScreen screen1;
@@ -24,8 +28,21 @@ public class BackgroundCrtl : MonoBehaviour
 
     private bool fourViewBool = false;
 
+    public int targetCenterPoint = 0;
+
     public void OnImageReady(IMGProcesser imgP)
     {
+        centerPointRect.DOAnchorPosX(imgP.centerPoint, 100f).SetSpeedBased(true);
+
+        if (controler.phase2.isOn)
+        {
+            float targetPoint = imgP.centerPoint;
+            if (controler.ivPhase2.isOn)
+                targetPoint = RangedMapClamp(targetPoint, 0, 1280, 1280, 0);
+
+            bgRectTransform.DOAnchorPosX(targetPoint - 640, 100f).SetSpeedBased(true);
+        }
+
         screen.SetScreenTexture(imgP.maskedCamFeed);
 
         if (fourViewBool)
@@ -46,6 +63,8 @@ public class BackgroundCrtl : MonoBehaviour
             currentBGIndex = bgSprites.Count - 1;
 
         background.sprite = bgSprites[currentBGIndex];
+        backgroundLeft.sprite = bgSprites[currentBGIndex];
+        backgroundRight.sprite = bgSprites[currentBGIndex];
     }
 
     public void ToggleDesk(bool state)
@@ -67,5 +86,13 @@ public class BackgroundCrtl : MonoBehaviour
             rectTransform.DOSizeDelta(new Vector2(1280, 720), 0.5f);
             controler.ShowControls();
         }
+    }
+    public float RangedMapClamp(float value, float InMinimum, float InMaximum, float OutMinimum, float OutMaximum)
+    {
+        var InRange = InMaximum - InMinimum;
+        var OutRange = OutMaximum - OutMinimum;
+        var finalValue = ((value - InMinimum) * OutRange / InRange) + OutMinimum;
+
+        return finalValue;
     }
 }
